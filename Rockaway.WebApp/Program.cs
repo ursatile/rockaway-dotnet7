@@ -32,6 +32,10 @@ if (builder.Environment.UseSqlite()) {
 builder.Services.AddDefaultIdentity<IdentityUser>()
 	.AddEntityFrameworkStores<RockawayDbContext>();
 
+#if DEBUG
+builder.Services.AddSassCompiler();
+#endif
+
 var app = builder.Build();
 
 if (app.Environment.IsProduction()) {
