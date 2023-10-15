@@ -40,6 +40,15 @@ $primary: #336699;
 @import "../lib/bootstrap/scss/utilities/api";
 
 // 8. Add additional custom code here
+@import '../lib/fontawesome/scss/fontawesome.scss';
+@import '../lib/fontawesome/scss/solid.scss';
+@import '../lib/fontawesome/scss/brands.scss';
+
+@mixin smartphone {
+	@media (max-width: 480px) {
+		@content;
+	}
+}
 
 @mixin fancy-panel($panel-color: color.scale($primary, $lightness: -75%)) {
 	margin: $grid-gutter-width 0;
@@ -47,6 +56,12 @@ $primary: #336699;
 	padding: 2 * $border-radius;
 	background-color: $panel-color;
 	border: 1px solid $body-color;
+
+	@include smartphone {
+		border: 0;
+		border-radius: 0;
+		margin: 0 0 $grid-gutter-width/2 0;
+	}
 }
 
 html {
@@ -57,11 +72,15 @@ html {
 body {
 	background: none;
 
-	> main {
+	@include smartphone {
+		padding: 0 !important;
+	}
+
+	>main {
 		@include fancy-panel;
 	}
 
-	> header {
+	>header {
 		@include fancy-panel;
 		display: flex;
 		justify-content: space-between;
@@ -69,7 +88,7 @@ body {
 		h1 {
 			a {
 				display: block;
-				font-size:0;
+				font-size: 0;
 				height: 38px;
 				width: 200px;
 				background: url(/img/rockaway-logotype.svg) left center no-repeat;
@@ -77,12 +96,54 @@ body {
 			}
 		}
 
+		label#nav-toggle {
+			display: none;
+
+			@include smartphone {
+				display: block;
+				position: absolute;
+				z-index: 2;
+				top: -4px;
+				right: 8px;
+				font-size: 200%;
+			}
+		}
+
+		input#nav-checkbox {
+			height: 0;
+
+			@include smartphone {
+				&:checked~nav {
+					height: 300px;
+				}
+			}
+		}
+
 		nav {
+			@include smartphone {
+				position: absolute;
+				overflow-y: hidden;
+				display: block;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 0;
+				transition: height 0.2s ease;
+
+				a {
+					display: block;
+					width: 100%;
+					padding: 16px;
+					border-bottom: 2px solid $body-color-dark;
+					border-radius: 0 !important;
+				}
+			}
+
 			a {
 				background: $primary;
 				display: inline-block;
 				padding: 4px 16px;
-				color: $body-color;
+				color: $body-color-dark;
 				font-size: 120%;
 				border-radius: $border-radius;
 				text-decoration: none;
@@ -95,27 +156,49 @@ body {
 		}
 	}
 
-	> footer {
+	>footer {
 		@include fancy-panel;
 		font-size: 80%;
 		display: flex;
+		flex-flow: row wrap;
 		justify-content: space-between;
+
+		span {
+			flex-grow: 1;
+
+			@include smartphone {
+				text-align: center;
+			}
+		}
+
 		nav {
 			a {
 				display: inline-block;
 				border-left: 1px solid #fff;
 				padding: 0 0.5em;
 				text-decoration: none;
-				// color: $body-color-dark;
 			}
+
 			a:first-child {
 				border: none;
 			}
+
 			a:hover {
-				// color: $body-color;
 				text-decoration: underline;
+			}
+
+			text-align: right;
+			flex-grow: 1;
+
+			@include smartphone {
+				width: 100%;
+				text-align: center;
+
+				a {
+					display: block;
+					border: 0;
+				}
 			}
 		}
 	}
-
 }

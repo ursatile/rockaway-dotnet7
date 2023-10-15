@@ -1,4 +1,6 @@
-@{ Layout = "_Base"; }
+@{
+	Layout = "_Base";
+}
 
 @section head {
 	@await RenderSectionAsync("Head", required: false)
@@ -7,6 +9,10 @@
 	<h1>
 		<a asp-area="" asp-page="/Index" asp-page="/Index">Rockaway</a>
 	</h1>
+	<label id="nav-toggle" for="nav-checkbox">
+		<i class="fa-solid fa-bars"></i>
+	</label>
+	<input type="checkbox" id="nav-checkbox" />
 	<nav>
 		<a asp-action="Index" asp-controller="Artists">Artists</a>
 		<a asp-action="Index" asp-controller="Venues">Venues</a>
